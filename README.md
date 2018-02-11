@@ -11,36 +11,36 @@ _wordkeep/app/controllers/words_controller.rb_
 ```
 before_action :set_word, only: [:show]
 
-	def index  
-		@words = Word.all  
-	end  
+def index  
+  @words = Word.all  
+end  
 
-  def new  
-  	@word = Word.new  
-  end  
+def new  
+  @word = Word.new  
+end  
 
-  def create  
-  	@word = Word.new(secure_params)  
-  	if @word.save  
-  		flash[:notice] = "Successfully created new word"  
-  		redirect_to projects_path  
-  	else
-  		flash[:notice] = "Unable to create new word"  
-  		render :new  
-  	end  
-  end  
+def create  
+  @word = Word.new(secure_params)  
+    if @word.save  
+    flash[:notice] = "Successfully created new word"  
+    redirect_to projects_path  
+    else
+    flash[:notice] = "Unable to create new word"  
+    render :new  
+    end  
+end  
 
-  #### At the bottom of all your other methods add:  
+#### At the bottom of all your other methods add:  
 
-  private  
+private
 
-  def secure_params  
-  	params.require(:word).permit(:title)  
-  end  
+def secure_params
+  params.require(:word).permit(:title)
+end  
 
-  def set_word  
-  	@word = Word.find(params[:id])  
-  end  
+def set_word  
+  @word = Word.find(params[:id])
+end  
 ```  
 
 3. ## Update routes  
