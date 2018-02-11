@@ -49,12 +49,10 @@ _wordkeep/config/routes.rb_
 
 4. ## Generate Words & Definitions Model
 
-`
-$ rails g model Words title:string
-$ rails g model Definitions body:text word_id:integer
-$ rails db:create:all
-$ rails db:migrate
-`
+`$ rails g model Words title:string`
+`$ rails g model Definitions body:text word_id:integer`
+`$ rails db:create:all`
+`$ rails db:migrate`
 
 5. ## Add db associations to Words & Definitions Model
 
