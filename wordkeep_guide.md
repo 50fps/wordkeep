@@ -1,7 +1,9 @@
 1. ## Create new application
 
+`
 $ rails new wordkeep --database=postgresql -T
 $ rails g controller Words index new show
+`
 
 2. ## Allow app to create new Words
 _wordkeep/app/controllers/words_controller.rb_
@@ -49,11 +51,12 @@ _wordkeep/config/routes.rb_
 
 4. ## Generate Words & Definitions Model
 
+`
 $ rails g model Words title:string
 $ rails g model Definitions body:text word_id:integer
 $ rails db:create:all
 $ rails db:migrate
-
+`
 
 5. ## Add db associations to Words & Definitions Model
 
@@ -197,7 +200,9 @@ _wordkeep/app/views/words/index.hrml.erb_
 <li><%= link_to "View all Words", words_path %></li>
 `
 
+`
 $ rails db:migrate
 $ rails s
+`
 
 ## At this point you have a functioning application structure that can add words with definitions
