@@ -8,8 +8,8 @@
 
 _wordkeep/app/controllers/words_controller.rb_  
 
-
-`before_action :set_word, only: [:show]
+```
+before_action :set_word, only: [:show]
 
 	def index  
 		@words = Word.all  
@@ -30,7 +30,7 @@ _wordkeep/app/controllers/words_controller.rb_
   	end  
   end  
 
-  # At the bottom of all your other methods add:  
+  #### At the bottom of all your other methods add:  
 
   private  
 
@@ -40,7 +40,8 @@ _wordkeep/app/controllers/words_controller.rb_
 
   def set_word  
   	@word = Word.find(params[:id])  
-  end  `  
+  end  
+```  
 
 3. ## Update routes  
 
@@ -50,7 +51,7 @@ _wordkeep/config/routes.rb_
 
 4. ## Generate Words & Definitions Model
 
-`
+```
 $ rails g model Words title:string  
 
 $ rails g model Definitions body:text word_id:integer  
@@ -58,24 +59,29 @@ $ rails g model Definitions body:text word_id:integer
 $ rails db:create:all  
 
 $ rails db:migrate  
-`  
+```  
 
 5. ## Add db associations to Words & Definitions Model  
 
 _wordkeep/app/models/word.rb_  
-`
+
+```
 	has_many :definitions, dependent: :destroy, inverse_of: :word  
+
 	accepts_nested_attributes_for :definitions, reject_if: proc { |attributes| attributes[:body].blank?}  
-`
+```
 _wordkeep/app/models/definition.rb_  
-`
+
+```
 	belongs_to :word, inverse_of: :definitions  
-`
+
+```
 
 6. ## Update Controller for accepts_nested_attributes_for  
 
 _wordkeep/app/controllers/words_controller.rb_  
-`
+
+```
 	def new  
   	@word = Word.new  
   	@word.definitions.build  
@@ -84,12 +90,13 @@ _wordkeep/app/controllers/words_controller.rb_
 	def secure_params  
   	params.require(:word).permit(:title, definitions_attributes: [:id, :body])  
   end  
-`  
+```  
 
 7. ## Fill in the views  
 
 _wordkeep/app/views/words/new.html.erb_  
-`
+
+```
 <h2>Create a new Word</h2>  
 <%= form_for @word do |w| %>  
 	<%= w.label :title %>  
@@ -100,10 +107,11 @@ _wordkeep/app/views/words/new.html.erb_
 	<% end %>  
 	<%= w.submit 'Create Word' %>  
 <% end %>  
-`  
+```  
   
 _wordkeep/app/views/words/index.html.erb_  
-`
+
+```
 <h1>View all Words:</h1>  
 
 <% for word in @words %>  
@@ -113,20 +121,21 @@ _wordkeep/app/views/words/index.html.erb_
 	<% end %>  
 <% end %>  
 
-`
+```  
 
 _wordkeep/app/views/words/show.html/erb_  
-`
+
+```
 <h4><%= @word.title %></h4>  
 <% for definition in @word.definitions %>  
 	<p><%= definition.body %></p>  
 <% end %>  
-`
-
+```
 8. ## Additional controller functionality  
 
 _wordkeep/app/controllers/words_controller.rb_  
-`
+
+```
 before_action :set_word, only: [:show, :edit, :update, :destroy]  
 
   def edit  
@@ -144,12 +153,13 @@ before_action :set_word, only: [:show, :edit, :update, :destroy]
   	@word.destroy  
   	redirect_to words_path  
   end  
-`  
+```  
 
 9. ## Add fields_for to edit form  
 
 _wordkeep/app/views/words/edit.hrml.erb_  
-`
+
+```
 <h2>Edit Word:</h2>  
 <%= form_for @word do |w| %>  
 	<%= w.label :title %>  
@@ -160,12 +170,13 @@ _wordkeep/app/views/words/edit.hrml.erb_
 	<% end %>  
 	<%= w.submit "Update" %>  
 <% end %>  
-`  
+```   
 
 10. ## Add navigational links  
 
 _wordkeep/app/views/words/index.hrml.erb_  
-`
+
+```
 <h1>View all Words:</h1>  
 
 <%= for word in @words %>  
@@ -180,27 +191,30 @@ _wordkeep/app/views/words/index.hrml.erb_
 
 <li><%= link_to "Create new word", new_word_path %></li>  
 
-`
+```  
 
 _wordkeep/app/views/words/show.html.erb_  
-`
-# add these lines to the bottom  
+
+```
+#### add these lines to the bottom  
 <li><%= link_to "View all Words", words_path %></li>  
 <li><%= link_to "Edit this Word", edit_word_path(@word) %></li>  
-`
+```  
 
 _wordkeep/app/views/words/edit.html.erb_  
-`
-# add these lines to the bottom  
+
+```
+#### add these lines to the bottom  
 <li><%= link_to "View all Words", words_path %></li>  
 <li><%= link_to "View this Word", word_path(@word) %></li>  
-`
+```  
 
 _wordkeep/app/views/words/index.hrml.erb_  
-`
-# add this line to the bottom	  
+
+```
+#### add this line to the bottom	  
 <li><%= link_to "View all Words", words_path %></li>  
-`  
+```  
 
 
 `$ rails db:migrate`  
@@ -208,4 +222,4 @@ _wordkeep/app/views/words/index.hrml.erb_
 `$ rails s`  
 
 
-## At this point you have a functioning application structure that can add words with definitions
+#### At this point you have a functioning application structure that can add words with definitions
