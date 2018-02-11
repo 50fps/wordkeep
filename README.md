@@ -72,7 +72,7 @@ accepts_nested_attributes_for :definitions, reject_if: proc { |attributes| attri
 _wordkeep/app/models/definition.rb_  
 
 ```
-	belongs_to :word, inverse_of: :definitions  
+belongs_to :word, inverse_of: :definitions  
 ```
 
 6. ## Update Controller for accepts_nested_attributes_for  
