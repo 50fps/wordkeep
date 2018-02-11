@@ -8,13 +8,11 @@
 
 _wordkeep/app/controllers/words_controller.rb_  
 
-`
-before_action :set_word, only: [:show]  
+
+`before_action :set_word, only: [:show]
 
 	def index  
-
 		@words = Word.all  
-
 	end  
 
   def new  
@@ -42,8 +40,7 @@ before_action :set_word, only: [:show]
 
   def set_word  
   	@word = Word.find(params[:id])  
-  end  
-`  
+  end  `  
 
 3. ## Update routes  
 
