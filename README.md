@@ -22,11 +22,11 @@ end
 def create  
   @word = Word.new(secure_params)  
     if @word.save  
-    flash[:notice] = "Successfully created new word"  
-    redirect_to projects_path  
+      flash[:notice] = "Successfully created new word"  
+      redirect_to projects_path  
     else
-    flash[:notice] = "Unable to create new word"  
-    render :new  
+      flash[:notice] = "Unable to create new word"  
+      render :new  
     end  
 end  
 
@@ -66,15 +66,13 @@ $ rails db:migrate
 _wordkeep/app/models/word.rb_  
 
 ```
-	has_many :definitions, dependent: :destroy, inverse_of: :word  
-
-	accepts_nested_attributes_for :definitions, reject_if: proc { |attributes| attributes[:body].blank?}  
+has_many :definitions, dependent: :destroy, inverse_of: :word  
+accepts_nested_attributes_for :definitions, reject_if: proc { |attributes| attributes[:body].blank?}  
 ```
 _wordkeep/app/models/definition.rb_  
 
 ```
 	belongs_to :word, inverse_of: :definitions  
-
 ```
 
 6. ## Update Controller for accepts_nested_attributes_for  
@@ -82,14 +80,14 @@ _wordkeep/app/models/definition.rb_
 _wordkeep/app/controllers/words_controller.rb_  
 
 ```
-	def new  
-  	@word = Word.new  
-  	@word.definitions.build  
-  end  
+def new  
+  @word = Word.new  
+  @word.definitions.build  
+end  
 
-	def secure_params  
-  	params.require(:word).permit(:title, definitions_attributes: [:id, :body])  
-  end  
+def secure_params  
+  params.require(:word).permit(:title, definitions_attributes: [:id, :body])  
+end  
 ```  
 
 7. ## Fill in the views  
@@ -98,14 +96,14 @@ _wordkeep/app/views/words/new.html.erb_
 
 ```
 <h2>Create a new Word</h2>  
-<%= form_for @word do |w| %>  
-	<%= w.label :title %>  
-	<%= w.text_field :title %>  
-	<%= w.fields_for :definitions do |d| %>  
-		<%= d.label :body %>  
-		<%= d.text_area :body, size: "30x10" %>  
-	<% end %>  
-	<%= w.submit 'Create Word' %>  
+  <%= form_for @word do |w| %>  
+  <%= w.label :title %>  
+  <%= w.text_field :title %>  
+    <%= w.fields_for :definitions do |d| %>  
+    <%= d.label :body %>  
+    <%= d.text_area :body, size: "30x10" %>  
+    <% end %>  
+  <%= w.submit 'Create Word' %>  
 <% end %>  
 ```  
   
@@ -115,12 +113,11 @@ _wordkeep/app/views/words/index.html.erb_
 <h1>View all Words:</h1>  
 
 <% for word in @words %>  
-	<h4><%= project.title %></h4>  
-	<% for definition in word.definitions %>  
-		<p><%= definition.body %></p>  
-	<% end %>  
+<h4><%= project.title %></h4>  
+  <% for definition in word.definitions %>  
+  <p><%= definition.body %></p>  
+  <% end %>  
 <% end %>  
-
 ```  
 
 _wordkeep/app/views/words/show.html/erb_  
@@ -128,7 +125,7 @@ _wordkeep/app/views/words/show.html/erb_
 ```
 <h4><%= @word.title %></h4>  
 <% for definition in @word.definitions %>  
-	<p><%= definition.body %></p>  
+  <p><%= definition.body %></p>  
 <% end %>  
 ```
 8. ## Additional controller functionality  
@@ -138,21 +135,21 @@ _wordkeep/app/controllers/words_controller.rb_
 ```
 before_action :set_word, only: [:show, :edit, :update, :destroy]  
 
-  def edit  
-  end  
+def edit  
+end  
 
-  def update  
-  	if @word.update_attributes(secure_params)  
-  		redirect_to @word, notice: 'Successfully updated word'  
-  	else  
-  		render :edit  
-  	end  
+def update  
+  if @word.update_attributes(secure_params)  
+    redirect_to @word, notice: 'Successfully updated word'  
+  else  
+    render :edit  
   end  
+end  
 
-  def destroy  
-  	@word.destroy  
-  	redirect_to words_path  
-  end  
+def destroy  
+  @word.destroy  
+  redirect_to words_path  
+end  
 ```  
 
 9. ## Add fields_for to edit form  
@@ -162,13 +159,13 @@ _wordkeep/app/views/words/edit.hrml.erb_
 ```
 <h2>Edit Word:</h2>  
 <%= form_for @word do |w| %>  
-	<%= w.label :title %>  
-	<%= w.text_field :title %>  
-	<%= w.fields_for :definitions do |d| %>  
-		<%= d.label :body %>  
-		<%= d.text_field :body %>  
-	<% end %>  
-	<%= w.submit "Update" %>  
+<%= w.label :title %>  
+<%= w.text_field :title %>  
+  <%= w.fields_for :definitions do |d| %>  
+    <%= d.label :body %>  
+    <%= d.text_field :body %>  
+  <% end %>  
+  <%= w.submit "Update" %>  
 <% end %>  
 ```   
 
@@ -180,13 +177,13 @@ _wordkeep/app/views/words/index.hrml.erb_
 <h1>View all Words:</h1>  
 
 <%= for word in @words %>  
-	<h4><%= word.title %></h4>  
-	<%= for definition in word.definitions %>  
-		<p><%= definition.body %></p>  
-	<% end %>  
-	<li><%= link_to "View", word_path(word.id) %></li>  
-	<li><%= link_to "Update", word_path(word.id) %></li>  
-	<li><%= link_to "Delete", word_path(word.id), method: :delete, data: {confirm: 'Are you sure?'}%></li>  
+  <h4><%= word.title %></h4>  
+  <%= for definition in word.definitions %>  
+    <p><%= definition.body %></p>  
+  <% end %>  
+  <li><%= link_to "View", word_path(word.id) %></li>  
+  <li><%= link_to "Update", word_path(word.id) %></li>  
+  <li><%= link_to "Delete", word_path(word.id), method: :delete, data: {confirm: 'Are you sure?'}%></li>  
 <% end %>  
 
 <li><%= link_to "Create new word", new_word_path %></li>  
