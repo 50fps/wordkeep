@@ -1,0 +1,8 @@
+
+<h4><%= @word.title %></h4>
+<% for definition in @word.definitions %>
+	<p><%= definition.body %></p>
+<% end %>
+
+<li><%= link_to "View all Words", words_path %></li>
+<li><%= link_to "Edit this Word", edit_word_path(@word) %></li>

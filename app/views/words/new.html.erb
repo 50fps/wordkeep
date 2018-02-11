@@ -1,0 +1,12 @@
+<h2>Create a new Word</h2>
+<%= form_for @word do |w| %>
+	<%= w.label :title %>
+	<%= w.text_field :title %>
+	<%= w.fields_for :definitions do |d| %>
+		<%= d.label :body %>
+		<%= d.text_area :body, size: "30x10" %>
+	<% end %>
+	<%= w.submit 'Create Word' %>
+<% end %>
+
+<li><%= link_to "View all Words", words_path %></li>

@@ -1,0 +1,13 @@
+<h1>View all Words:</h1>
+
+<% for word in @words %>
+	<h4><%= word.title %></h4>
+	<% for definition in word.definitions %>
+		<p><%= definition.body %></p>
+	<% end %>
+	<li><%= link_to "View", word_path(word.id) %></li>
+	<li><%= link_to "Update", word_path(word.id) %></li>
+	<li><%= link_to "Delete", word_path(word.id), method: :delete, data: {confirm: 'Are you sure?'}%></li>
+<% end %>
+
+<li><%= link_to "Create new word", new_word_path %></li>

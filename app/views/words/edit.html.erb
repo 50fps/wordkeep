@@ -1,0 +1,13 @@
+<h2>Edit Word:</h2>
+<%= form_for @word do |w| %>
+	<%= w.label :title %>
+	<%= w.text_field :title %>
+	<%= w.fields_for :definitions do |d| %>
+		<%= d.label :body %>
+		<%= d.text_field :body %>
+	<% end %>
+	<%= w.submit "Update" %>
+<% end %>
+
+<li><%= link_to "View all Words", words_path %></li>
+<li><%= link_to "View this Word", word_path(@word) %></li>
