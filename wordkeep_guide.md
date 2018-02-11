@@ -1,9 +1,7 @@
 1. ## Create new application
 
-`
-$ rails new wordkeep --database=postgresql -T
-$ rails g controller Words index new show
-`
+`$ rails new wordkeep --database=postgresql -T`
+`$ rails g controller Words index new show`
 
 2. ## Allow app to create new Words
 _wordkeep/app/controllers/words_controller.rb_
